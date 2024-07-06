@@ -1,0 +1,116 @@
+.ticket {
+  width: 90vw;
+  max-width: 502px;
+  height: 184px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+}
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price {
+  font-size: 24px;
+  color: rgba(33, 150, 243, 1);
+  font-family: Open-Sans;
+  font-weight: 600;
+}
+.route {
+  display: flex;
+  width: 150px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.routeThere {
+  font-family: Open-Sans;
+  color: rgba(160, 176, 185, 1);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.routeBack {
+  font-family: Open-Sans;
+  color: rgba(160, 176, 185, 1);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+.time {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80px;
+  font-family: Open-Sans;
+  font-size: 14px;
+}
+.time span:first-of-type {
+  font-family: Open-Sans;
+  color: rgba(160, 176, 185, 1);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.time span:not(:first-of-type) {
+  font-family: Open-Sans;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(74, 74, 74, 1);
+  font-weight: 600;
+}
+.routeWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.times {
+  display: flex;
+  width: 100px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.length {
+  font-family: Open-Sans;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(74, 74, 74, 1);
+  font-weight: 600;
+}
+.stops {
+  display: flex;
+  flex-wrap: wrap;
+  width: 120px;
+  gap: 20px;
+}
+.stopsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 120px;
+  min-height: 38px;
+}
+.stopsBack {
+  display: inline-block;
+  width: 120px;
+  font-family: Open-Sans;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(74, 74, 74, 1);
+  font-weight: 600;
+}
+.stopsThere {
+  display: inline-block;
+  width: 120px;
+  font-family: Open-Sans;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(74, 74, 74, 1);
+  font-weight: 600;
+}
+.stopsQuantity {
+  font-family: Open-Sans;
+  color: rgba(160, 176, 185, 1);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
