@@ -1,6 +1,11 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { setFastest, setCheapest, setOptimal } from "../Store/combinedSlice"
+// eslint-disable-next-line import/no-cycle
+import {
+  sortFastest,
+  sortCheapest,
+  sortOptimal
+} from "../../utilities/combinedSlice"
 import classes from "./Tabs.module.scss"
 export default function Tabs() {
   const [activeTab, setActiveTab] = useState(null)
@@ -31,7 +36,7 @@ export default function Tabs() {
     <div className={classes.tabs}>
       <button
         type="button"
-        onClick={() => handleTabClick(0, dispatch(setCheapest()))}
+        onClick={() => handleTabClick(0, dispatch(sortCheapest()))}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleTabClick(0)
@@ -43,7 +48,7 @@ export default function Tabs() {
       </button>
       <button
         type="button"
-        onClick={() => handleTabClick(1, dispatch(setFastest()))}
+        onClick={() => handleTabClick(1, dispatch(sortFastest()))}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleTabClick(1)
@@ -55,7 +60,7 @@ export default function Tabs() {
       </button>
       <button
         type="button"
-        onClick={() => handleTabClick(2, dispatch(setOptimal()))}
+        onClick={() => handleTabClick(2, dispatch(sortOptimal()))}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleTabClick(2)

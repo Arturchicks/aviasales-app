@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 // eslint-disable-next-line import/no-cycle
-import { fetchOn } from "../Service/service"
-import { getId } from "../Service/getId"
-// eslint-disable-next-line import/no-cycle
+import { fetchOn } from "./service"
+import { getId } from "./getId"
 
 const initialState = {
   check: {
@@ -19,12 +18,13 @@ const initialState = {
   },
   tickets: [],
   ticketsData: [],
-  value: [],
+  displayedTickets: [],
   counter: 5,
   loading: null,
   searchId: null,
   stop: null,
-  idLoad: false
+  idLoad: false,
+  didMount: false
 }
 
 const combinedSlice = createSlice({
@@ -109,112 +109,122 @@ const combinedSlice = createSlice({
       }
     }),
 
-    setAll: (state) => {
+    filterAll: (state) => {
       if (state.check.all) {
-        state.value = [...state.ticketsData]
+        state.displayedTickets = [...state.ticketsData]
       } else {
-        state.value = []
+        state.displayedTickets = []
       }
     },
-    setOne: (state) => {
+    filterOne: (state) => {
       const filterArr = state.ticketsData.filter(
-        (e) => e.segments[0].stops.length === 1
+        (e) =>
+          e.segments[0].stops.length === 1 || e.segments[1].stops.length === 1
       )
       if (state.check.one) {
         if (Object.values(state.check).filter((e) => !!e === true).length > 1) {
-          state.value = [...state.value, ...filterArr]
+          state.displayedTickets = [...state.displayedTickets, ...filterArr]
         } else {
-          state.value = [...filterArr]
+          state.displayedTickets = [...filterArr]
         }
       } else if (
         Object.values(state.check).filter((e) => !!e === true).length === 0
       ) {
-        state.value = []
+        state.displayedTickets = []
       } else {
-        state.value = state.value.filter(
-          (e) => e.segments[0].stops.length !== 1
+        state.displayedTickets = state.displayedTickets.filter(
+          (e) =>
+            e.segments[0].stops.length !== 1 && e.segments[1].stops.length !== 1
         )
       }
     },
-    setTwo: (state) => {
+    filterTwo: (state) => {
       const filterArr = state.ticketsData.filter(
-        (e) => e.segments[0].stops.length === 2
+        (e) =>
+          e.segments[0].stops.length === 2 || e.segments[1].stops.length === 2
       )
       if (state.check.two) {
         if (Object.values(state.check).filter((e) => !!e === true).length > 1) {
-          state.value = [...state.value, ...filterArr]
+          state.displayedTickets = [...state.displayedTickets, ...filterArr]
         } else {
-          state.value = [...filterArr]
+          state.displayedTickets = [...filterArr]
         }
       } else if (
         Object.values(state.check).filter((e) => !!e === true).length === 0
       ) {
-        state.value = []
+        state.displayedTickets = []
       } else {
-        state.value = state.value.filter(
-          (e) => e.segments[0].stops.length !== 2
+        state.displayedTickets = state.displayedTickets.filter(
+          (e) =>
+            e.segments[0].stops.length !== 2 && e.segments[1].stops.length !== 2
         )
       }
     },
-    setThree: (state) => {
+    filterThree: (state) => {
       const filterArr = state.ticketsData.filter(
-        (e) => e.segments[0].stops.length === 3
+        (e) =>
+          e.segments[0].stops.length === 3 || e.segments[1].stops.length === 3
       )
       if (state.check.three) {
         if (Object.values(state.check).filter((e) => !!e === true).length > 1) {
-          state.value = [...state.value, ...filterArr]
+          state.displayedTickets = [...state.displayedTickets, ...filterArr]
         } else {
-          state.value = [...filterArr]
+          state.displayedTickets = [...filterArr]
         }
       } else if (
         Object.values(state.check).filter((e) => !!e === true).length === 0
       ) {
-        state.value = []
+        state.displayedTickets = []
       } else {
-        state.value = state.value.filter(
-          (e) => e.segments[0].stops.length !== 3
+        state.displayedTickets = state.displayedTickets.filter(
+          (e) =>
+            e.segments[0].stops.length !== 3 && e.segments[1].stops.length !== 3
         )
       }
     },
-    setWithout: (state) => {
+    filterWithout: (state) => {
       const filterArr = state.ticketsData.filter(
-        (e) => e.segments[0].stops.length === 0
+        (e) =>
+          e.segments[0].stops.length === 0 || e.segments[1].stops.length === 0
       )
       if (state.check.without) {
         if (Object.values(state.check).filter((e) => !!e === true).length > 1) {
-          state.value = [...state.value, ...filterArr]
+          state.displayedTickets = [...state.displayedTickets, ...filterArr]
         } else {
-          state.value = [...filterArr]
+          state.displayedTickets = [...filterArr]
         }
       } else if (
         Object.values(state.check).filter((e) => !!e === true).length === 0
       ) {
-        state.value = []
+        state.displayedTickets = []
       } else {
-        state.value = state.value.filter(
-          (e) => e.segments[0].stops.length !== 0
+        state.displayedTickets = state.displayedTickets.filter(
+          (e) =>
+            e.segments[0].stops.length !== 0 && e.segments[1].stops.length !== 0
         )
       }
     },
-    setFastest: (state) => {
+    sortFastest: (state) => {
       state.tabs.fastest = true
       state.tabs.cheapest = false
       state.tabs.optimal = false
-      state.value = state.value.sort(
+      state.displayedTickets = state.displayedTickets.sort(
         (a, b) => a.segments[1].duration - b.segments[1].duration
       )
     },
-    setCheapest: (state) => {
+    sortCheapest: (state) => {
       state.tabs.cheapest = true
       state.tabs.optimal = false
       state.tabs.fastest = false
-      state.value = state.value.sort((a, b) => a.price - b.price)
+      state.displayedTickets = state.displayedTickets.sort(
+        (a, b) => a.price - b.price
+      )
     },
-    setOptimal: (state) => {
+    sortOptimal: (state) => {
       state.tabs.optimal = true
       state.tabs.fastest = false
       state.tabs.cheapest = false
-      state.value = state.value.sort((a, b) => {
+      state.displayedTickets = state.displayedTickets.sort((a, b) => {
         const firstEl =
           a.segments[0].duration * 100 +
           a.price +
@@ -228,6 +238,9 @@ const combinedSlice = createSlice({
     },
     loadTickets: (state) => {
       state.counter += 5
+    },
+    ticketsMount: (state) => {
+      state.didMount = true
     }
   },
   extraReducers: (builder) => {
@@ -260,16 +273,17 @@ export const {
   toggleCheapest,
   toggleOptimal,
   setTickets,
-  setOne,
-  setTwo,
-  setThree,
-  setWithout,
-  setAll,
-  setIds,
+  filterOne,
+  filterTwo,
+  filterThree,
+  filterWithout,
+  filterAll,
+  filterIds,
   loadTickets,
-  setFastest,
-  setCheapest,
-  setOptimal
+  sortFastest,
+  sortCheapest,
+  sortOptimal,
+  ticketsMount
 } = combinedSlice.actions
 
 export default combinedSlice.reducer

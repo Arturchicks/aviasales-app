@@ -1,5 +1,6 @@
-import { configureStore, applyMiddleware, middleware } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
 import { thunk } from "redux-thunk"
+// eslint-disable-next-line import/no-cycle
 import combinedSlice from "./combinedSlice"
 const store = configureStore({
   reducer: combinedSlice,

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 // eslint-disable-next-line import/no-cycle
-import store from "../Store/index"
+import store from "../../utilities/store"
 import {
   toggleOne,
   toggleTwo,
@@ -9,15 +9,15 @@ import {
   toggleWithout,
   toggleAll,
   toggleAllTrue,
-  setOne,
-  setTwo,
-  setThree,
-  setWithout,
-  setAll,
-  setCheapest,
-  setFastest,
-  setOptimal
-} from "../Store/combinedSlice"
+  filterOne,
+  filterTwo,
+  filterThree,
+  filterWithout,
+  filterAll,
+  sortCheapest,
+  sortFastest,
+  sortOptimal
+} from "../../utilities/combinedSlice"
 import classes from "./Filters.module.scss"
 
 export default function Filters() {
@@ -34,39 +34,39 @@ export default function Filters() {
     // eslint-disable-next-line default-case
     switch (true) {
       case tabs.cheapest:
-        dispatch(setCheapest())
+        dispatch(sortCheapest())
         break
       case tabs.fastest:
-        dispatch(setFastest())
+        dispatch(sortFastest())
         break
       case tabs.optimal:
-        dispatch(setOptimal())
+        dispatch(sortOptimal())
         break
     }
   }
   const handleOne = (checked) => {
     dispatch(toggleOne(checked))
-    dispatch(setOne())
+    dispatch(filterOne())
     filterTabs()
   }
   const handleTwo = (checked) => {
     dispatch(toggleTwo(checked))
-    dispatch(setTwo())
+    dispatch(filterTwo())
     filterTabs()
   }
   const handleThree = (checked) => {
     dispatch(toggleThree(checked))
-    dispatch(setThree())
+    dispatch(filterThree())
     filterTabs()
   }
   const handleWithout = (checked) => {
     dispatch(toggleWithout(checked))
-    dispatch(setWithout())
+    dispatch(filterWithout())
     filterTabs()
   }
   const handleAll = (checked) => {
     dispatch(toggleAll(checked))
-    dispatch(setAll())
+    dispatch(filterAll())
     filterTabs()
   }
 

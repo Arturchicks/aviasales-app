@@ -2,25 +2,27 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { LoadingOutlined } from "@ant-design/icons"
 import { Alert, Spin } from "antd"
+// eslint-disable-next-line import/no-cycle
 import Filters from "../Filters/Filters"
 import Tabs from "../Tabs/Tabs"
 import Tickets from "../Tickets/Tickets"
-import { fetchOn } from "../Service/service"
-import { getId } from "../Service/getId"
+import { fetchOn } from "../../utilities/service"
+import { getId } from "../../utilities/getId"
 import {
-  setOne,
+  filterOne,
   loadTickets,
-  setTwo,
-  setThree,
-  setWithout,
-  setCheapest,
-  setFastest,
-  setOptimal
-} from "../Store/combinedSlice"
+  filterTwo,
+  filterThree,
+  filterWithout,
+  sortCheapest,
+  sortFastest,
+  sortOptimal
+} from "../../utilities/combinedSlice"
 // import { filterValue } from "../../utilities/filterValue"
 import classes from "./App.module.scss"
 export default function App() {
-  const { stop, check, searchId, value, tabs } = useSelector((state) => state)
+  const { stop, check, searchId, displayedTickets, tabs, didMount } =
+    useSelector((state) => state)
   const dispatch = useDispatch()
   const all =
     check.all || check.one || check.two || check.three || check.without
@@ -28,19 +30,19 @@ export default function App() {
   const filterValue = () => {
     switch (true) {
       case check.one:
-        dispatch(setOne())
+        dispatch(filterOne())
         break
       case check.two:
-        dispatch(setTwo())
+        dispatch(filterTwo())
         break
       case check.three:
-        dispatch(setThree())
+        dispatch(filterThree())
         break
       case check.without:
-        dispatch(setWithout())
+        dispatch(filterWithout())
         break
       default:
-        return value
+        return displayedTickets
     }
   }
 
@@ -48,13 +50,13 @@ export default function App() {
     // eslint-disable-next-line default-case
     switch (true) {
       case tabs.cheapest:
-        dispatch(setCheapest())
+        dispatch(sortCheapest())
         break
       case tabs.fastest:
-        dispatch(setFastest())
+        dispatch(sortFastest())
         break
       case tabs.optimal:
-        dispatch(setOptimal())
+        dispatch(sortOptimal())
         break
     }
   }
@@ -73,7 +75,7 @@ export default function App() {
 
     return () => undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, searchId, stop, value, check, tabs])
+  }, [dispatch, searchId, stop, displayedTickets, check, tabs])
 
   useEffect(() => {
     dispatch(getId())
@@ -102,7 +104,7 @@ export default function App() {
         <div className={classes["tickets-list"]}>
           <Tabs />
           {all && <Tickets />}
-          {all && (
+          {didMount && all && (
             <button
               type="button"
               className={classes.showButton}
@@ -127,3 +129,4 @@ export default function App() {
     </>
   )
 }
+export const { filterValue } = App

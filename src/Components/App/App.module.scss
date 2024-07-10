@@ -25,10 +25,10 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
-  animation-name: display;
+  animation-name: rotates;
   animation-duration: 2s;
 }
-@keyframes display {
+@keyframes rotates {
   from {
     opacity: 0;
     rotate: 0deg;
@@ -61,6 +61,14 @@ body {
   gap: 20px;
   width: 90vw;
   margin: 0 auto;
+}
+@keyframes display {
+  from {
+    display: none;
+  }
+  to {
+    display: block;
+  }
 }
 .showButton {
   width: 90vw;

@@ -1,10 +1,17 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { nanoid } from "nanoid"
+import { useEffect } from "react"
 import Ticket from "../Ticket/Ticket"
+// eslint-disable-next-line import/no-cycle
+import { ticketsMount } from "../../utilities/combinedSlice"
 export default function Tickets() {
-  const { value, counter } = useSelector((state) => state)
-  if (value) {
-    return value
+  const { displayedTickets, counter } = useSelector((state) => state)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    setTimeout(() => dispatch(ticketsMount()), 1000)
+  }, [dispatch])
+  if (displayedTickets) {
+    return displayedTickets
       .map((e) => {
         return (
           <Ticket
